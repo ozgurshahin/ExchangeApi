@@ -1,0 +1,5 @@
+response = requests.request("GET", pair_url)
+response = requests.get(pair_url)
+Bu 2 si ayni seyi dondu
+----------------------------------------
+ ./venv/bin/pip freeze > requirements.txt
