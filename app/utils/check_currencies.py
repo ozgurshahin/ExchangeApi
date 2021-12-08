@@ -1,4 +1,4 @@
-from enums.supported_currencies import Currencies
+from app.enums.supported_currencies import Currencies
 
 
 def check_currencies(from_currency, to_currency):

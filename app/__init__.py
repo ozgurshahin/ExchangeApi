@@ -9,9 +9,10 @@ from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash
 from werkzeug.utils import redirect
 
+from app.dto.get_exchange_rate_response import GetExchangeRateResponse
+from app.models.user import Users
+from app.utils.check_currencies import check_currencies
 from config import configuration
-from dto.get_exchange_rate_response import GetExchangeRateResponse
-from utils.check_currencies import check_currencies
 
 app = Flask(__name__)
 app.config['DEBUG'] = True
@@ -22,16 +23,6 @@ url = BASE_URL + API_KEY
 app.config['SQLALCHEMY_DATABASE_URI'] = configuration.SQLALCHEMY_DATABASE_URI
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = configuration.SQLALCHEMY_TRACK_MODIFICATIONS
 db = SQLAlchemy(app)
-
-
-class Users(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50))
-    password = db.Column(db.String(50))
-
-
-db.create_all()
-db.session.commit()
 
 
 @app.route('/register', methods=['POST'])
@@ -123,5 +114,5 @@ def get_exchange_rate():
         return jsonify({"conversion_rate": "The Currency is not correct!!!"})
 
 
-if __name__ == '__main__':
-    app.run(debug=True)
+db.create_all()
+db.session.commit()
